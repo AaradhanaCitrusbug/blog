@@ -79,12 +79,12 @@ def login(request):
             user = authenticate(username, password)
         
         if user is not None:
-            return render(request, 'blog_views.post_list')
+            return render(request, 'post_list')
         else:
             return HttpResponse('Incorrect credentials')
         # return form with entered data, display messages at the top
     else:
         form = UserLoginForm(request.POST)
-    return render(request, 'login', {'form': form})
+    return render(request, 'users/login.html', {'form': form})
     
     

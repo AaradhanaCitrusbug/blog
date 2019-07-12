@@ -17,8 +17,4 @@ class UserLoginForm(UserCreationForm):
         model = User
         fields = ['username', 'password']
 
-    def clean_email(self):
-        email=self.cleaned_data.get('email')
-        if not "" in email:
-            raise forms.ValidationError("Please enter gmail id")
-        return email
+    
