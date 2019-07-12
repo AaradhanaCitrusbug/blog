@@ -1,20 +1,29 @@
 {% extends 'blog/base.html' %} {% block content %}
-<div class="content-section">
-    <div>{{display_message}}</div>
-    <form method="post">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb -4">Login</legend>
-            {{ form.as_p}}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Login</button>
-        </div>
-    </form>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-        Dont't have an account? <a href="#">Sign Up</a>
+
+<h2>{{display_message}}</h2>
+<center>
+    <div class="signup-form">
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <h2>Login</h2>
+
+            <div class="form-group">
+                <input type="username" class="form-control" name="username" placeholder="username" required="required">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-lg btn-block">Log In</button>
+            </div>
+        </form>
+
+        <div class="border-top pt-3">
+            <small class="text-muted">
+        Dont't have an account? <a href="{% url 'register'%}">Sign Up</a>
         </small>
+        </div>
     </div>
-</div>
+</center>
 {% endblock %}

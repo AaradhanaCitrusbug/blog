@@ -15,6 +15,7 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from .forms import UserLoginForm
+from blog import views as blog_views
 
 
 # Create your views here.
@@ -58,18 +59,32 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        login(request)
         # return redirect('home')
-        display_message='Thank you for your email confirmation. Now you can login your account.'
-        return render(request, 'users/login.html', {'display_message': display_message,
+        display_message="Thank you for your email confirmation. You can login to your account from"
+        
+        return render(request, 'users/thankyou.html', {'display_message': display_message,
                                                     'user': user})
     else:
         return HttpResponse('Activation link is invalid!')
 
-def login(request, user):
+def login(request):
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
-        if form.is_valid():
-            posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-            return render(request, 'blog/post_list.html', {'posts': posts})
-
+        
+        if form.is_valid:
+            data = request.POST.copy()
+            username = data.get('username')
+            password = data.get('password')
+            user = authenticate(username, password)
+        
+        if user is not None:
+            return render(request, 'blog_views.post_list')
+        else:
+            return HttpResponse('Incorrect credentials')
+        # return form with entered data, display messages at the top
+    else:
+        form = UserLoginForm(request.POST)
+    return render(request, 'login', {'form': form})
+    
+    
