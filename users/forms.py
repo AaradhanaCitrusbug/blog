@@ -17,4 +17,3 @@ class UserLoginForm(UserCreationForm):
         model = User
         fields = ['username', 'password']
 
-    

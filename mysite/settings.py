@@ -130,3 +130,4 @@ EMAIL_HOST_PASSWORD = 'rkwdzsuabykfzvzo'
 EMAIL_USE_TLS = True    #for gmail
 
 LOGIN_REDIRECT_URL = 'post_list'
+

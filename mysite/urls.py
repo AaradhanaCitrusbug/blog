@@ -18,12 +18,15 @@ from django.urls import path, include
 from users import views as user_views
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', user_views.register, name='register'),
     path('', include('blog.urls')),
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         user_views.activate, name='activate'),
     path('login/', user_views.login, name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('thankyou/',user_views.thankyou, name='thankyou'),
 ]
